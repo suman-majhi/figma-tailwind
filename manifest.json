@@ -1,0 +1,15 @@
+{
+  "manifest_version": 2,
+  "name": "Figma tailwind",
+  "version": "1.0.0",
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.figma.com/*"
+      ],
+      "js": [
+        "index.js"
+      ]
+    }
+  ]
+}
