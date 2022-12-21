@@ -1,5 +1,5 @@
 const getTailwindClass = () => {
-  let raw = [...document.querySelectorAll('.css_code_panel--cssLine--JGzSD')].map((item) => item.innerText.slice(0, -1).split(': '))
+  let raw = [...document.querySelectorAll('div[class*="css_code_panel--cssLine"]')].map((item) => item.innerText.slice(0, -1).split(': '))
   console.log(raw)
 
   const textProps = {
@@ -51,7 +51,7 @@ const getTailwindClass = () => {
 }
 
 const createSnippet = () => {
-  const parent = document.querySelector('.css_code_panel--cssCodeContent--NKg4m')
+  const parent = document.querySelector('div[class*="css_code_panel--cssCodeContent"]')
   const box = document.createElement('div')
   box.setAttribute('class', 'hljs-comment tailwind_snippet')
   box.innerText = 'Click to get tailwind snippet'
@@ -78,7 +78,7 @@ const init = () => {
   })
 
   // Tab click
-  document.querySelector('.pages_panel--tab--M7qS8[data-label="Inspect"]').addEventListener('click', (event) => {
+  document.querySelector('div[class*="pages_panel--tab"][data-label="Inspect"]').addEventListener('click', (event) => {
     console.log('Inspect tab clicked')
     const tailwind_snippet = document.querySelector('.tailwind_snippet')
     if (!tailwind_snippet) {
