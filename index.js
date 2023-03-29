@@ -52,6 +52,12 @@ const getTailwindClass = () => {
 
 const createSnippet = () => {
   const parent = document.querySelector('div[class*="css_code_panel--cssCodeContent"]')
+  if (!parent) {
+    setTimeout(() => {
+      createSnippet()
+    }, 500)
+    return
+  }
   const box = document.createElement('div')
   box.setAttribute('class', 'hljs-comment tailwind_snippet')
   box.innerText = 'Click to get tailwind snippet'
@@ -69,8 +75,21 @@ const createSnippet = () => {
   })
 }
 const init = () => {
+  if (typeof document === 'undefined') {
+    setTimeout(() => {
+      init()
+    }, 500)
+    return
+  }
+  const canvasEl = document.querySelector('canvas')
+  if (!canvasEl) {
+    setTimeout(() => {
+      init()
+    }, 500)
+    return
+  }
   // Generate tailwind classes
-  document.querySelector('canvas').addEventListener('click', (event) => {
+  canvasEl.addEventListener('click', (event) => {
     console.log('Canvas clicked')
     setTimeout(() => {
       getTailwindClass()
