@@ -1,6 +1,5 @@
 const getTailwindClass = () => {
   let raw = [...document.querySelectorAll('div[class*="css_code_panel--cssLine"]')].map((item) => item.innerText.slice(0, -1).split(': '))
-  console.log(raw)
 
   const textProps = {
     'font-family': 'font',
@@ -47,6 +46,13 @@ const getTailwindClass = () => {
   console.log('Tailwind result')
   console.log(res)
   const tlSnippet = document.querySelector('.tailwind_snippet')
+  if (!tlSnippet) {
+    setTimeout(() => {
+      createSnippet()
+      getTailwindClass()
+    }, 500)
+    return
+  }
   tlSnippet.innerText = res.trim() || 'Click to get tailwind snippet'
 }
 
@@ -82,6 +88,8 @@ const init = () => {
     return
   }
   const canvasEl = document.querySelector('canvas')
+  console.log('Canvas element')
+  console.log(canvasEl)
   if (!canvasEl) {
     setTimeout(() => {
       init()
@@ -97,17 +105,31 @@ const init = () => {
   })
 
   // Tab click
-  document.querySelector('div[class*="pages_panel--tab"][data-label="Inspect"]').addEventListener('click', (event) => {
-    console.log('Inspect tab clicked')
-    const tailwind_snippet = document.querySelector('.tailwind_snippet')
-    if (!tailwind_snippet) {
-      createSnippet()
+  const onInspectTabClick = () => {
+    const inspectTab = document.querySelector('div[class*="pages_panel--tab"][data-label="Inspect"]')
+    if (!inspectTab) {
+      setTimeout(() => {
+        onInspectTabClick()
+      }, 500)
+      return
     }
-  })
+    inspectTab.addEventListener('click', (event) => {
+      console.log('Inspect tab clicked')
+      const tailwind_snippet = document.querySelector('.tailwind_snippet')
+      if (!tailwind_snippet) {
+        createSnippet()
+      }
+    })
+  }
+  onInspectTabClick()
   createSnippet()
 }
+
+console.warn('Figma plugin trigger')
 window.onload = () => {
+  console.warn('Figma plugin onload')
   setTimeout(() => {
+    console.log('Figma plugin init')
     init()
     console.log('Figma plugin load')
   }, 3000)
