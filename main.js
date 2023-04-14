@@ -26,7 +26,7 @@ const getCssList = () => {
 }
 
 const cssObjToTailwind = (cssObj) => {
-  const tailwindClass = `${cssObj.key}-[${cssObj.value}]`
+  const tailwindClass = `${cssObj.key}-[${cssObj.value.replaceAll(' ', '_')}]`
   return tailwindClass
 }
 
@@ -50,32 +50,59 @@ const convertCssProps = () => {
     tailwindSnippetItem.innerText = cssList.map((cssObj) => cssObjToTailwind(cssObj)).join('\n')
   })
 }
-const cssCodeContent = () => {
+
+const createSnippet = () => {
+  const cssCodeContent = document.querySelector('div[class*="css_code_panel--cssCodeContent"]')
+
+  const tailwindSnippet = document.createElement('div')
+  tailwindSnippet.setAttribute('class', 'tailwind_snippet')
+  tailwindSnippet.innerText = 'Click to get tailwind snippet'
+
+  // Append snippet after cssCodeContent
+  cssCodeContent.parentNode.insertBefore(tailwindSnippet, cssCodeContent.nextSibling)
+}
+
+const checkCssCodeContent = () => {
   const cssCodeContent = document.querySelector('div[class*="css_code_panel--cssCodeContent"]')
   if (cssCodeContent) {
     // Check if tailwind snippet already exists
     const preTailwindSnippet = document.querySelector('.tailwind_snippet')
     if (preTailwindSnippet) {
-      convertCssProps()
       return
     }
 
     // Creating tailwind snippet
-    const tailwindSnippet = document.createElement('div')
-    tailwindSnippet.setAttribute('class', 'tailwind_snippet')
-    tailwindSnippet.innerText = 'Click to get tailwind snippet'
+    createSnippet()
 
-    // Append snippet before cssCodeContent
-    cssCodeContent.parentNode.insertBefore(tailwindSnippet, cssCodeContent)
+    // Update snippet with tailwind classes
     convertCssProps()
   } else {
     console.log('Not available')
   }
 }
 
+const addCanvasClickEvent = () => {
+  const canvas = document.querySelector('canvas')
+
+  // If canvas not available, try again after 100ms
+  if (!canvas) {
+    setTimeout(addCanvasClickEvent, 100)
+    return
+  }
+
+  // Click any design to update snippet props
+  canvas.addEventListener('click', () => {
+    console.log('Canvas clicked')
+    setTimeout(convertCssProps, 100)
+  })
+}
+
 window.onload = () => {
-  console.warn('Figma plugin onload')
+  console.log('Figma plugin onload')
   setInterval(() => {
-    cssCodeContent()
+    checkCssCodeContent()
   }, 1000)
+
+  // update snippet on canvas click
+  addCanvasClickEvent()
 }

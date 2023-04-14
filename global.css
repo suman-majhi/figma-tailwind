@@ -1,5 +1,6 @@
 .tailwind_snippet {
-  padding-bottom: 20px;
+  padding: 20px 0;
+  border-top: 1px solid #9b9b9b;
 }
 
 .tailwind_snippet_item {
