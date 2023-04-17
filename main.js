@@ -1,3 +1,104 @@
+const config = {
+  keys: {
+    'display': '',
+    'position': '',
+
+    // Flex
+    'flex-direction': 'flex',
+    'flex-wrap': 'flex-warp',
+    'flex-flow': 'flex',
+    'justify-content': 'justify',
+    'align-items': 'items',
+    'align-content': 'content',
+    'align-self': 'self',
+    'order': 'order',
+    'flex-grow': 'grow',
+    'flex-shrink': 'shrink',
+    'flex-basis': 'basis',
+
+    'width': 'w',
+    'height': 'h',
+
+    'margin': 'm',
+    'padding': 'p',
+
+    'background': 'bg',
+    'background-color': 'bg',
+
+    'opacity': 'opacity',
+
+    'border': 'border',
+    'border-radius': 'rounded',
+
+    'object-fit': 'object',
+    'object-position': 'object',
+
+    'box-shadow': 'shadow',
+
+    // Text
+    'font-family': 'font',
+    'font-style': '',
+    'font-weight': 'font',
+    'font-size': 'text',
+    'line-height': 'leading',
+    'letter-spacing': 'tracking',
+    'color': 'text'
+  },
+  values: {
+    'flex-direction': {
+      'row': 'row',
+      'row-reverse': 'row-reverse',
+      'column': 'col',
+      'column-reverse': 'col-reverse'
+    },
+    'justify-content': {
+      'flex-start': 'start',
+      'flex-end': 'end',
+      'center': 'center',
+      'space-between': 'between',
+      'space-around': 'around',
+      'space-evenly': 'evenly'
+    },
+    'align-items': {
+      'flex-start': 'start',
+      'flex-end': 'end',
+      'center': 'center',
+      'baseline': 'baseline',
+      'stretch': 'stretch'
+    },
+    'object-fit': {
+      'fill': 'fill',
+      'contain': 'contain',
+      'cover': 'cover',
+      'none': 'none',
+      'scale-down': 'scale-down'
+    },
+    'object-position': {
+      'center': 'center',
+      'top': 'top',
+      'bottom': 'bottom',
+      'left': 'left',
+      'right': 'right'
+    },
+    'font-weight': {
+      100: "thin",
+      200: "extralight",
+      300: "light",
+      400: "normal",
+      500: "medium",
+      600: "semibold",
+      700: "bold",
+      800: "extrabold",
+      900: "black",
+    },
+    'font-style': {
+      'italic': 'italic',
+      'normal': 'non-italic'
+    },
+  }
+}
+
+// Get css list from html and convert to object list
 const getCssList = () => {
   const cssCodeContent = document.querySelector('div[class*="css_code_panel--cssCodeContent"]')
   if (cssCodeContent) {
@@ -26,7 +127,31 @@ const getCssList = () => {
 }
 
 const cssObjToTailwind = (cssObj) => {
-  const tailwindClass = `${cssObj.key}-[${cssObj.value.replaceAll(' ', '_')}]`
+  const tailwindKeys = config.keys
+  const tailwindValues = config.values
+  
+  // Css key to tailwind prefix
+  let tailwindClassPrefix = ''
+  if (tailwindKeys[cssObj.key]) {
+    tailwindClassPrefix = tailwindKeys[cssObj.key] + '-'
+  } else if (tailwindKeys[cssObj.key] === '') {
+    tailwindClassPrefix = ''
+  } else {
+    tailwindClassPrefix = cssObj.key + '-'
+  }
+
+  // Css value to tailwind value
+  let tailwindClassValue = ''
+  if (tailwindValues[cssObj.key]) {
+    tailwindClassValue = tailwindValues[cssObj.key][cssObj.value]
+  } else if (tailwindKeys[cssObj.key] === '') { // If no prefix, no need to add []
+    tailwindClassValue = cssObj.value.replaceAll(' ', '_')
+  } else {
+    tailwindClassValue = `[${cssObj.value.replaceAll(' ', '_')}]`
+  }
+
+  // Combine prefix and value
+  const tailwindClass = `${tailwindClassPrefix}${tailwindClassValue}`
   return tailwindClass
 }
 
@@ -47,7 +172,7 @@ const convertCssProps = () => {
 
   cssListGroup.forEach((cssList) => {
     const tailwindSnippetItem = createSnipperItem()
-    tailwindSnippetItem.innerText = cssList.map((cssObj) => cssObjToTailwind(cssObj)).join('\n')
+    tailwindSnippetItem.innerText = cssList.map((cssObj) => cssObjToTailwind(cssObj)).join(' \n')
   })
 }
 
@@ -81,18 +206,23 @@ const checkCssCodeContent = () => {
   }
 }
 
-const addCanvasClickEvent = () => {
-  const canvas = document.querySelector('canvas')
+const updateSnippetOnClick = () => {
 
   // If canvas not available, try again after 100ms
-  if (!canvas) {
-    setTimeout(addCanvasClickEvent, 100)
+  if (!document) {
+    setTimeout(updateSnippetOnClick, 100)
     return
   }
 
   // Click any design to update snippet props
-  canvas.addEventListener('click', () => {
-    console.log('Canvas clicked')
+  document.addEventListener('click', (event) => {
+    // click outside of tailwind snippet
+    const snippet = document.querySelector('.tailwind_snippet')
+    if (snippet && snippet.contains(event.target)) {
+      return
+    }
+
+    console.log('document clicked')
     setTimeout(convertCssProps, 100)
   })
 }
@@ -103,6 +233,6 @@ window.onload = () => {
     checkCssCodeContent()
   }, 1000)
 
-  // update snippet on canvas click
-  addCanvasClickEvent()
+  // update snippet on click
+  updateSnippetOnClick()
 }
