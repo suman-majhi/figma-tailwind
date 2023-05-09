@@ -1,0 +1,10 @@
+.tailwind_snippet {
+  padding: 20px 0;
+  border-top: 1px solid #9b9b9b;
+}
+
+.tailwind_snippet_item {
+  margin-bottom: 20px;
+  color: rgb(125 211 252);
+  cursor: pointer;
+}
