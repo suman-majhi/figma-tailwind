@@ -53,7 +53,7 @@ rounded-md
 
 ![Live example](./assets/example-2.png)
 
-The Tailwind panel provides an intuitive interface for selecting and applying Tailwind utility classes directly on the website. Say goodbye to switching between figma and other website!
+The Figma website side-panel provides an intuitive interface for selecting and applying Tailwind utility classes directly on the website. Say goodbye to switching between figma and other website!
 
 ## Contributing
 We welcome contributions from the open-source community. If you have any suggestions, bug reports, or feature requests, please submit an issue on GitHub.
