@@ -9,7 +9,7 @@ Figma-Tailwind is a powerful Chrome extension that seamlessly integrates Figma C
 
 To install Figma-Tailwind, follow these steps:
 
-1. **Download** or **clone** the code from the [Figma-Tailwind GitHub repository](https://github.com/suman-majhi/figma-tailwind).
+1. **Download** or **clone** the code from the [Figma-Tailwind GitHub zip](https://github.com/suman-majhi/figma-tailwind/archive/refs/heads/main.zip).
 2. **Load** the extension in your Chrome browser by navigating to `chrome://extensions` in the address bar.
 3. Enable the **Developer mode** (toggle switch located at the top right corner).
 4. Click on the **"Load unpacked"** button.
