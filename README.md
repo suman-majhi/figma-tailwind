@@ -61,3 +61,7 @@ We welcome contributions from the open-source community. If you have any suggest
 
 ## Support
 Thank you for using Figma-Tailwind! We hope this extension enhances your Tailwind development experience. If you have any questions or need support, please don't hesitate to contact us.
+
+## Disclaimer
+This Chrome extension is a personal project and may not cover all Tailwind utility classes. It is a work in progress, and improvements will be made over time. Please use it with that understanding. We appreciate your support and feedback as we continue to enhance the functionality of this extension.
+
