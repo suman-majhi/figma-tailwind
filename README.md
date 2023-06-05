@@ -1,7 +1,7 @@
 
 # Figma-Tailwind Chrome Extension
 
-![Figma-Tailwind Logo](https://github.com/suman-majhi/figma-tailwind/figma-tailwind-logo.png)
+![Figma-Tailwind Logo](https://github.com/suman-majhi/figma-tailwind/assets/figma-tailwind-logo.png)
 
 Figma-Tailwind is a powerful Chrome extension that seamlessly integrates Figma CSS code into Tailwind, enabling you to easily apply beautiful designs to your Tailwind-powered websites.
 
@@ -51,7 +51,7 @@ rounded-md
 
 ### Example 2: Figma Side-Panel
 
-![Live example](https://github.com/suman-majhi/figma-tailwind/example-2.png)
+![Live example](https://github.com/suman-majhi/figma-tailwind/assets/example-2.png)
 
 The Tailwind panel provides an intuitive interface for selecting and applying Tailwind utility classes directly on the website. Say goodbye to switching between code editors and browsers!
 
