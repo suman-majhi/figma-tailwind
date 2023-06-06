@@ -42,10 +42,10 @@ border-radius: 4px;
 
 /* Converted Tailwind CSS */
 
-text-white 
-bg-red-500 
-p-2 
-rounded-md
+text-[#ffffff]
+bg-[#ff0000] 
+p-[10px_20px]
+rounded-[4px]
 
 ```
 
